@@ -1,9 +1,12 @@
 package com.hwjoo.dagger2sample;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.hwjoo.dagger2sample.data.DataManager;
 import com.hwjoo.dagger2sample.di.component.ApplicationComponent;
+import com.hwjoo.dagger2sample.di.component.DaggerApplicationComponent;
+import com.hwjoo.dagger2sample.di.module.ApplicationModule;
 
 import javax.inject.Inject;
 
@@ -16,4 +19,20 @@ public class DemoApplication extends Application{
 
     @Inject
     DataManager dataManager;
+
+    public static DemoApplication get(Context context){
+        return (DemoApplication) context.getApplicationContext();
+    }
+    @Override
+    public void onCreate(){
+        super.onCreate();
+        applicationComponent = DaggerApplicationComponent
+                .builder()
+                .applicationModule(new ApplicationModule(this))
+                .build();
+        applicationComponent.inject(this);
+    }
+    public ApplicationComponent getComponent(){
+        return applicationComponent;
+    }
 }

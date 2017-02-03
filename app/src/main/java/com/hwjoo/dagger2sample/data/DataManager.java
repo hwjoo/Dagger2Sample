@@ -27,13 +27,17 @@ public class DataManager {
         this.mDbHelper = dbHelper;
         this.mSharedPrefsHelper = sharedPrefsHelper;
     }
+    public void saveAccessToken(String accessToken) {
+        mSharedPrefsHelper.put(SharedPrefsHelper.PREF_KEY_ACCESS_TOKEN, accessToken);
+    }
+
     public String getAccessToken(){
-        return null;
+        return mSharedPrefsHelper.get(SharedPrefsHelper.PREF_KEY_ACCESS_TOKEN, null);
     }
     public Long createUser(User user) throws Exception {
-        return null;
+        return mDbHelper.insertUser(user);
     }
     public User getUser(Long userId) throws Resources.NotFoundException, NullPointerException {
-        return null;
+        return mDbHelper.getUser(userId);
     }
 }
